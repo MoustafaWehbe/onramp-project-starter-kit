@@ -1,10 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { LayoutDashboard, Settings } from "lucide-react";
+import { LayoutDashboard, Settings, Database } from "lucide-react";
 import { cn } from "../../lib/utils";
 
 const navItems = [
   { to: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { to: "/settings", label: "Settings", icon: Settings },
+  { to: "/cache-demo", label: "Cache Demo", icon: Database },
 ];
 
 export function Sidebar() {

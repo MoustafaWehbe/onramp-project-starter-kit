@@ -13,6 +13,6 @@
     "noEmit": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["src/**/*", "vite.config.ts"],
+  "include": ["src/**/*", "vite.config.ts", "public/service-worker.js"],
   "exclude": ["node_modules", "dist"]
 }
