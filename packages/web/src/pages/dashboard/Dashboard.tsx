@@ -7,12 +7,14 @@ import {
 } from "../../components/ui/card";
 import React from "react";
 import { useServiceWorker } from "@/hooks/userServiceWorker";
+import UserList from "./UserList";
 
 export function Dashboard() {
   const { user } = useAuth();
   const [users, setUsers] = React.useState<any[]>([]);
   const { isOnline } = useServiceWorker();
   console.log("Dashboard online status:", isOnline);
+  const [count, setCount] = React.useState(0);
 
   React.useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/users")
@@ -26,31 +28,23 @@ export function Dashboard() {
       });
   }, []);
 
+  const filteredUsers = React.useMemo(
+    () => users.filter((user) => user.name.toLowerCase().includes("c")),
+    [users],
+  );
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold tracking-tight">Dashboard</h1>
         <p className="text-muted-foreground">Welcome back, {user?.name}!</p>
       </div>
-      {/* print some users */}
-      {users.length > 0 && (
-        <div>
-          <h2 className="text-lg font-semibold tracking-tight">Users</h2>
-          <ul className="list-disc pl-5">
-            {users.map((user) => (
-              <li key={user.id} className="text-sm text-muted-foreground">
-                {user.name} ({user.email})
-              </li>
-            ))}
-          </ul>
-        </div>
-      )}
-      <div>
-        <h2 className="text-lg font-semibold tracking-tight">Features</h2>
-        <p className="text-sm text-muted-foreground">
-          Explore the features of your starter kit below.
-        </p>
-      </div>
+      <button
+        onClick={() => setCount((count) => count + 1)}
+        className="px-4 py-2 bg-blue-500 text-white rounded"
+      >
+        Increment Count: {count}
+      </button>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         <Card>
@@ -63,6 +57,7 @@ export function Dashboard() {
             </p>
           </CardContent>
         </Card>
+        <UserList users={filteredUsers} />
       </div>
     </div>
   );
